@@ -76,7 +76,7 @@ moveDown(self): Moves the player down. +2.2222% of the screen.
 
 moveLeft(self): Moves the player to the left. -1.25% of the screen.
 
-moveRight(self): Moves the player to the right. -1.25% of the screen.
+moveRight(self): Moves the player to the right. +1.25% of the screen.
 
 joinPlace(self,newPosx,newPosy,newPlace): Changes the position and place of the player.
 
