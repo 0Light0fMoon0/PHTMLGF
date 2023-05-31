@@ -140,7 +140,7 @@ EntityWater: No applications at the moment.
 
 EntityDecoration:
 
-decoration: Name the decoration.
+decoration: Name of the decoration.
 
 texture: Texture or decoration animation.
 
