@@ -1,0 +1,283 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block contenedor %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    setInterval(function(){
+       $(' #screen').load(' #objects');
+       $(' #console').load(' #chat');
+
+
+    }, 1000);
+});
+
+</script>
+</script>
+<br>
+<div id="contenedor">
+        <div class="row">
+        <!---->
+                <div class="col-xl-9">
+        <!----------------------------------- Screen ----------------------------------->
+                        <div class="card text-center" style="background-color: rgba(0, 0, 0, 0.5);">
+                                <div class="card text-center" style="background-color: rgba(33, 37, 41, 0.8);" id="screen">
+                                        <div id="objects">
+                {%for pl in places%}
+                                        <!-- Printing Place -->
+                        {%if player.place == pl.place%}
+                                                <img src="{%static pl.texture%}" class="card-img" alt="...">
+                                                <div class="card-img-overlay">
+                                        <!-- Printing Players -->
+                                {%for po in pConnecteds%} 
+                                        {%if po.place == pl.place%}
+                                                        <img src="{%static po.texture%}" style="width:1.25%;position: absolute;top: {{po.posy}}%; left: {{po.posx}}%;">
+                                        {%endif%}
+                                {%endfor%}
+                                {%for place in places%} 
+                                        {%if place.location == pl.place%}
+                                                        <img src="{%static place.txtExt%}" style="width:12.5%;position: absolute;top: {{place.posy}}%; left: {{place.posx}}%;">
+                                        {%endif%}
+                                {%endfor%}
+                                {%for d in decorations%} 
+                                        {%if d.place == pl.place%}
+                                                        <img src="{%static d.texture%}" style="position: absolute;top: {{d.posy}}%; left: {{d.posx}}%;">
+                                        {%endif%}
+                                {%endfor%}
+
+
+                                                </div>
+                        {%endif%}
+                {%endfor%}
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        <!---->
+        <!---->
+                <div class="col-xl-3">
+                        <div class="card h-100 text-center text-white" style="background-color: rgba(0, 0, 0, 0.5);">
+        <!----------------------------------- Info Console ----------------------------------->
+                {%for pl in places%}
+                        {%if player.place == pl.place%}
+                                <div class="card-body">
+                                        <div class="h-50 card text-white" style="text-align:center;background-color: rgba(12, 14, 16, 0.8);text-align:center;">
+                                                <div class="card-body" id="console">
+                                                        <div id="chat">
+                                                                <h5 class="card-title">{{pl.place}}</h5>
+                                                                <pre style="height: auto;max-height: 100px;overflow: hidden;white-space: pre-wrap;">{{pl.log}}</pre>
+                                                        </div>
+                                                </div>
+                                        </div>
+
+                                        <div id="console-control" class="card text-white" style="text-align:center;background-color: rgba(12, 14, 16, 0.8);text-align:center;">
+                                                <div class="card-body">
+                                                        <form action="/engine/" method="POST" id="console-form" name="btn-console">{% csrf_token %}
+                                                                <input id="txtChat" name="txtChat" class="form-control text-white" type="text" style="background-color: rgba(0, 0, 0, 0.5);text-align:center;">
+                                                                <br>
+                                                                <input id="btnChat" name="btnChat" type="submit" class="btn btn-dark" value="Send">
+                                                        </form>
+                                                        </script>
+                                                </div>
+                                        </div>
+                                </div>
+                        {%endif%}
+                {%endfor%}
+        <!----------------------------------- Joystick Movement ----------------------------------->
+                                <div class="card-footer text-body-secondary">
+                                                <form action="/engine/" method="POST" id="btnUp-form" style="width:100%">
+                {% csrf_token %}
+                                                        <button type="submit" name="btnUp" id="btnUp" value="btnUp" class="btn btn-primary">↑</button>
+                                                </form>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                <form action="/engine/" method="POST" id="btnLeft-form">
+                {% csrf_token %}
+                                                        <button  type="submit" name="btnLeft" id="btnLeft" value="btnLeft" class="btn btn-primary">←</button>
+                                                </form>
+&emsp;
+                                                <form action="/engine/" method="POST" id="btnDown-form">
+                {% csrf_token %}
+                                                        <button  type="submit" name="btnDown" id="btnDown" value="btnDown" class="btn btn-primary">↓</button>
+                                                </form>
+&emsp;
+                                                <form action="/engine/" method="POST" id="btnRight-form">
+                {% csrf_token %}
+                                                        <button  type="submit" name="btnRight" id="btnRight" value="btnRight" class="btn btn-primary">→</button>
+                                                </form>
+                                        </div>
+                                                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                                                <script type="text/javascript">
+                                                        $(document).on('submit','#btnUp-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnUp").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+                                                        $(document).on('submit','#btnLeft-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnLeft").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+                                                        $(document).on('submit','#btnDown-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnDown").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+                                                        $(document).on('submit','#btnRight-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnRight").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+                                                        $(document).on('submit','#btnActionA-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnActionA").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+                                                        $(document).on('submit','#btnActionB-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnActionB").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+                                                        $(document).on('submit','#btnActionC-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnActionC").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+                                                        $(document).on('submit','#console-form',function(e){
+                                                                e.preventDefault();
+                                                                $.ajax({
+                                                                    type:'POST',
+                                                                    url:'/engine/',
+                                                                    data:
+                                                                    {
+                                                                        task:$("#btnChat").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                        task2:$("#txtChat").val(),
+                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+                                                                    },
+                                                                    })
+                                                                });
+
+                                             </script>
+                                        <br>
+                                        <br>
+                                        <div class="btn-group" role="group" aria-label="Basic example">
+                                                <form action="/engine/" method="POST" id="btnActionA-form" style="">
+                {% csrf_token %}
+                                                        <button  type="submit" name="btnActionA" id="btnActionA" value="btnActionA" class="btn btn-danger">Action A</button>
+                                                </form>
+&emsp;
+                                                <form action="/engine/" method="POST" id="btnActionB-form" style="">
+                {% csrf_token %}
+                                                        <button  type="submit" name="btnActionB" id="btnActionB" value="btnActionB" class="btn btn-danger">Action B</button>
+                                                </form>
+&emsp;
+                                                <form action="/engine/" method="POST" id="btnActionC-form" style="">
+                {% csrf_token %}
+                                                        <button  type="submit" name="btnActionC" id="btnActionC" value="btnActionC" class="btn btn-danger">Action C</button>
+                                                </form>
+
+                                        </div>
+                                </div>
+                        </div>
+                </div>
+        <!---->
+        </div>
+</div>
+<!----------------------------------- Menu Windows ----------------------------------->
+
+
+<!-- Windows: Here you should make your Windows for you game. Remember evaluate it with an if like the examples. -->
+        {%for w in windows%}
+                {%if w.nameWindow == "windowExample"%}
+<div class="modal fade text-white" id="{{w.nameWindow}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.1);">
+        <div class="modal-dialog" style="background-color: rgba(0, 0, 0, 0.1);">
+                <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.1);">
+                        <div class="modal-header" style="background-color: rgba(0, 0, 0, 0.1);">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">{{w.tittle}}</h1>
+                                <button type="button" class="btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                This is an example window body.
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Button</button>
+                        </div>
+                </div>
+        </div>
+</div>
+                {%endif%}
+
+                {%if w.nameWindow == "windowExample2"%}
+<div class="modal fade text-white" id="{{w.nameWindow}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.1);">
+        <div class="modal-dialog" style="background-color: rgba(0, 0, 0, 0.1);">
+                <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.1);">
+                        <div class="modal-header" style="background-color: rgba(0, 0, 0, 0.1);">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">{{w.tittle}}</h1>
+                                <button type="button" class="btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                                This is an second example window body.
+                        </div>
+                        <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Button</button>
+                        </div>
+                </div>
+        </div>
+</div>
+                {%endif%}
+        {%endfor%}
+
+{% endblock %}
