@@ -7,3 +7,13 @@ The idea behind PHTMLGF (Python HTML Game Framework) emerge because as a fan of 
 Having given the introduction, I would like to comment that PHTMLGF is a kit of code files, which can be integrated into their projects or used as a base project for the development of video games using the technologies previously mentioned in the introduction. I have to emphasize that I am just starting out in the world of programming, so probably a more experienced programmer will be able to find possible bugs or errors in the code that, in my opinion, are not perceptible to the naked eye, so future developers may They can optimize the code a lot. It goes without saying that any contribution you want to make is more than welcome, be it code optimizations, (constructive) criticism or opinions.
 My main clarification is that my intention or idea is that PHTMLGF is free for anyone who wants to use it, so I am looking for permissive licenses to ensure that this purpose is fulfilled.
 I hope the community grows and together we can achieve something great, thank you very much for your attention.
+
+How to get started with PHTMLGF?
+•First step, install PHTMLGF, for this it will be enough to install Python and Django Framework on our computer and download the files from the PHTMLGF repository.
+•Second step, we move our project files to our project root directory.
+•Third step, we adjust our project settings according to our needs in settings.py.
+•Fourth step, in the root directory we create a "static" directory where the textures and animations of our game will be stored.
+Ready! Our PHTMLGF kit is ready to start creating video games.
+
+Do you want to start creating games?
+Visit our community on discord where you will find all the information, you can also contact me, I will be answering all your questions. Remember that the idea is that PHTMLGF is free and open for everyone to use and build it together, so any opinions and ideas are welcome.
