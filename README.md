@@ -10,14 +10,14 @@ I hope the community grows and together we can achieve something great, thank yo
 
 How to get started with PHTMLGF?
 
-•First step, install PHTMLGF, for this it will be enough to install Python and Django Framework on our computer and download the files from the PHTMLGF repository.
+• First step, install PHTMLGF, for this it will be enough to install Python and Django Framework on our computer and download the files from the PHTMLGF repository.
 
-•Second step, we move our project files to our project root directory.
+• Second step, we move our project files to our project root directory.
 
-•Third step, we adjust our project settings according to our needs in settings.py.
+• Third step, we adjust our project settings according to our needs in settings.py.
 
-•Fourth step, in the root directory we create a "static" directory where the textures and animations of our game will be stored.
+• Fourth step, in the root directory we create a "static" directory where the textures and animations of our game will be stored.
 Ready! Our PHTMLGF kit is ready to start creating video games.
 
 Do you want to start creating games?
-Visit our community on discord where you will find all the information, you can also contact me, I will be answering all your questions. Remember that the idea is that PHTMLGF is free and open for everyone to use and build it together, so any opinions and ideas are welcome.
+Visit our community on discord where you will find all the information, you can also contact me, I will be answering all your questions. Remember that the idea is that PHTMLGF is free and open for everyone to use and build it together, so any opinions and ideas are welcome. https://discord.gg/4RVR8eQUDP
