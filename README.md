@@ -124,7 +124,7 @@ toPlace: Place to which the portal redirects.
 
 extSize: Portal action size or scope.
 
-place: Place where you are.
+place: Place where is it.
 
 maxWidth: Portal action size or scope.
 
