@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% block contenedor %}
+<!--
+<div class="h-25"></div>
+<div class="ocultado h-50">
+        <img src="{%static 'logo.gif'%}" class="img-fluid mx-auto d-block" alt="...">
+</div> -->
+<br>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+</script>
+
+
+<div class="ocultado d-flex justify-content-center">
+        <div class="card" style="width:90%; background-color: rgba(33, 37, 41, 0.8);">
+                <br>
+                <div class="d-flex justify-content-center">
+                        <div id="carousel" class="carousel vert slide h-100 w-100" data-bs-ride="carousel">
+                                <div class="carousel-inner">
+    {% for carrusel in carrusels %}
+      {% if carrusel.body == "First" %}
+                                        <div class="carousel-item active">
+                                                <img src="{%static carrusel.image%}" class="d-block w-100">
+                                        </div>
+      {% else %}
+                                        <div class="carousel-item">
+                                                <img src="{%static carrusel.image%}" class="d-block w-100">
+                                        </div>
+      {% endif %}
+    {% endfor %}
+                                </div>
+                        </div>
+                </div>
+        <br>
+        </div>
+</div>
+
+<br>
+<br>
+
+<div class="ocultado d-flex justify-content-center">
+        <div class="card" style="width: 90%; background-color: rgba(0, 0, 0, 0.5);">
+                <div class="card-group">
+  {% for new in news %}
+                        <div class="card-horizontal text-white" style="background-color: rgba(33, 37, 41, 0.8);">
+                                <img src="{%static new.image%}" class="card-img-top" style="width: 150px; height: 150px;" alt="...">
+                                <div class="card-body">
+                                        <h5 class="card-title">{{new.name}}</h5>
+                                        <pre class="card-text" scroll="no" style="white-space: pre-wrap;">{{new.body}}</pre>
+                                        <small class="text-muted">Date: {{new.date}} </small>
+                                </div>
+                        </div>
+
+<br>
+<br>
+  {% endfor %}
+                </div>
+        </div>
+</div>
+{% endblock %}
