@@ -72,7 +72,7 @@ funcShowing(self,imganim): Change texture to imganim.
 
 moveUp(self): Moves the player up. -2.2222% of the screen.
 
-moveDown(self): Moves the player up. +2.2222% of the screen.
+moveDown(self): Moves the player down. +2.2222% of the screen.
 
 moveLeft(self): Moves the player to the left. -1.25% of the screen.
 
