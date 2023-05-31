@@ -33,65 +33,126 @@ All entities are loaded from the database (by default) only when starting the se
 
 
 Here is a description of the entities, their attributes and methods:
+
+-----------------------------------------------------------------------------------------------------------------------------
+
 EntityPlayer:
+
 nickname: Name of the player.
+
 password: Player password.
+
 creds: Money or player score.
+
 posx: Position on the x-axis of the player.
+
 posy: Position on the y-axis of the player.
+
 place: Place where the player is.
+
 imgup: Image or texture of the player up.
+
 imgdown: Image or texture of the player down.
+
 imgright: Image or texture of the player to the right.
+
 imgleft: Image or texture of the player to the left.
+
 animup: Animation or texture of the player up.
+
 animdown: Animation or texture of the player down.
+
 animleft: Animation or texture of the player to the left.
+
 animright: Animation or texture of the player to the right.
+
 texture: The texture, animation, or image that is currently printing to the player on the screen.
+
 funcShowing(self,imganim): Change texture to imganim.
+
 moveUp(self): Moves the player up. -2.2222% of the screen.
+
 moveDown(self): Moves the player up. +2.2222% of the screen.
+
 moveLeft(self): Moves the player to the left. -1.25% of the screen.
+
 moveRight(self): Moves the player to the right. -1.25% of the screen.
+
 joinPlace(self,newPosx,newPosy,newPlace): Changes the position and place of the player.
 
+-----------------------------------------------------------------------------------------------------------------------------
+
 EntityPlace:
+
 place: Name of the place.
+
 texture: Texture or background animation of the place.
+
 txtExt: Texture or animation of the exterior of the place.
+
 log: Message history of the place.
+
 owner: Owner of the place.
+
 posx: Position on the x axis of the place.
+
 posy: Position on the y-axis of the locus.
+
 location: Place where this place is located, if it is not within any, set it to None from the Django administration panel.
 
 sendMessage(self,player,message): Adds the name and message sent by a player to the log.
 
+-----------------------------------------------------------------------------------------------------------------------------
+
 EntityPortal:
+
 portal: Name of the portal.
+
 texture: Texture or animation of the portal.
+
 owner: Owner of the portal.
+
 posx: Position on the x axis of the portal.
+
 posy: Position on the y-axis of the portal.
+
 toPosx: Position on the x axis to which the portal redirects.
+
 toPosy: Position on the y-axis to which the portal redirects.
+
 toPlace: Place to which the portal redirects.
+
 extSize: Portal action size or scope.
+
 place: Place where you are.
+
 maxWidth: Portal action size or scope.
+
 maxHeight: Size or scope of the portal action.
+
 playerJoin(self,psx,psy): Evaluates if a player's position is within the range of the portal.
+
+-----------------------------------------------------------------------------------------------------------------------------
 
 EntityWater: No applications at the moment.
 
+-----------------------------------------------------------------------------------------------------------------------------
+
 EntityDecoration:
+
 decoration: Name the decoration.
+
 texture: Texture or decoration animation.
+
 posx: Position on the x axis of the decoration.
+
 posy: Position on the y-axis of the decoration.
+
 place: Place where the decoration is located.
 
+-----------------------------------------------------------------------------------------------------------------------------
 EntityWindow:
+
 nameWindow: Name of the window.
+
 title: Title of the window.
