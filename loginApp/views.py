@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from engineApp.models import Player 
 from engineApp.engineClass import *
 from django.contrib import messages
-from mainApp.views import pConnecteds,places,waters,decorations
+from mainApp.views import pConnecteds,places,waters,decorations,notification
 
 #Global Vars
 

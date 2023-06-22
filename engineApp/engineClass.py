@@ -1,6 +1,9 @@
 #Start coding.
 import os
 import time
+from django.shortcuts import render, redirect
+from django.http import HttpResponse
+from django.contrib import messages
 
 #Classes
 
@@ -16,6 +19,7 @@ class EntityPlayer():
         self.posx = posx
         self.posy = posy
         self.place = place
+        self.moving = False
         
         self.imgup = imgup
         self.imgdown = imgdown
@@ -27,12 +31,22 @@ class EntityPlayer():
         self.animright = animright
         self.texture = texture
 
+        self.camera_x = 0
+        self.camera_y = 0
+
     def funcShowing(self,imganim):
         self.texture = imganim
+    
+    def funcCollision(self,psx,psy):
+        pass
 
+    def funcCamera(self):
+            self.camera_x = 50 - self.posx
+            self.camera_y = 50 - self.posy
 
     def moveUp(self):
-        if self.posy > 2.2222:
+        if self.posy > 2.2222 and self.moving == False:
+            self.moving = True
             self.posyend = self.posy - 2.2222
             while self.posy > self.posyend:
                 self.funcShowing(self.animup)
@@ -40,9 +54,12 @@ class EntityPlayer():
                 self.posy = self.posy - 0.4444
             self.posy = self.posyend
             self.funcShowing(self.animup)
+            self.funcCamera()
+            self.moving = False 
 
     def moveDown(self):
-        if self.posy < 97.778:
+        if self.posy < 97.778 and self.moving == False:
+            self.moving = True
             self.posyend = self.posy + 2.2222
             while self.posy < self.posyend:
                 self.funcShowing(self.animdown)
@@ -50,9 +67,12 @@ class EntityPlayer():
                 self.posy = self.posy + 0.4444
             self.posy = self.posyend
             self.funcShowing(self.animdown)
+            self.funcCamera()
+            self.moving = False 
 
     def moveLeft(self):
-        if self.posx > 1.25:
+        if self.posx > 1.25 and self.moving == False:
+            self.moving = True
             self.posxend = self.posx - 1.25
             while self.posx > self.posxend:
                 self.funcShowing(self.animleft)
@@ -60,9 +80,12 @@ class EntityPlayer():
                 self.posx = self.posx - 0.25
             self.posx = self.posxend
             self.funcShowing(self.animleft)
+            self.funcCamera()
+            self.moving = False 
 
     def moveRight(self):
-        if self.posx < 98.75:
+        if self.posx < 98.75 and self.moving == False:
+            self.moving = True
             self.posxend = self.posx + 1.25
             while self.posx < self.posxend:
                 self.funcShowing(self.animright)
@@ -70,6 +93,8 @@ class EntityPlayer():
                 self.posx = self.posx + 0.25
             self.posx = self.posxend
             self.funcShowing(self.animright)
+            self.funcCamera()
+            self.moving = False 
 
     def joinPlace(self,newPosx,newPosy,newPlace):
         self.place = newPlace
@@ -93,7 +118,7 @@ class EntityPlace():
     def sendMessage(self,player,message):
         player=player
         message=message
-        message= player + ' : ' + message + ' \n ' 
+        message= player.nickname + ' : ' + message + ' \n ' 
         self.log = message + self.log
 
 
@@ -136,7 +161,7 @@ class EntityWater():
 
 #Class Decoration.
 class EntityDecoration():
-    def __init__(self,decoration,posx,posy,place):
+    def __init__(self,decoration,texture,posx,posy,place):
         self.decoration = decoration
         self.texture = texture
         self.posx = posx
@@ -148,5 +173,12 @@ class EntityWindow():
     def __init__(self,nameWindow,tittle):
         self.nameWindow = nameWindow
         self.tittle = tittle 
+
+class EntityNotification():
+    def __init__(self,nameWindow,tittle,body,state):
+        self.nameWindow = nameWindow
+        self.tittle = tittle 
+        self.body = body 
+        self.state = state 
 
 

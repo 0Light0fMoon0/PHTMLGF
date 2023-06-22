@@ -3,7 +3,8 @@ from django.http import HttpResponse
 from engineApp.models import Player, Place, Portal, Water, Decoration
 from engineApp.engineClass import *
 from django.contrib import messages
-from mainApp.views import pConnecteds,places,portals,waters,decorations,windows
+from mainApp.views import pConnecteds,places,portals,waters,decorations,windows,notification
+import time
 
 #Engine Function.
 def funcEngine(request):
@@ -21,6 +22,7 @@ def funcEngine(request):
             if str(p.nickname) == str(request.session['player']):
                 player = EntityPlayer(nickname=p.nickname,creds=p.creds,password=p.password,posx=p.posx,posy=p.posy,place=p.place,imgup=p.imgup,imgdown=p.imgdown,imgleft=p.imgleft,imgright=p.imgright,animup=p.animup,animdown=p.animdown,animleft=p.animleft,animright=p.animright,texture=p.texture)
                 numplayer = numofplayers
+                p.funcCamera()
 
         if numplayer == 0:
             logged = False
@@ -32,7 +34,6 @@ def funcEngine(request):
     else:
         return redirect('/login/')
     tittle="Python HTML Game Engine"
-
 
 
 #Buttons.
@@ -85,12 +86,12 @@ def funcEngine(request):
             for p in pConnecteds:
                 if p.nickname == player.nickname:
                     for po in portals:
-                        compVar = po.playerJoin(player.posx,player.posy)
-                        if compVar == True:
-                            print('Entro')
-                            player.joinPlace(po.toPosx,po.toPosy,po.toPlace)
-                            p.joinPlace(po.toPosx,po.toPosy,po.toPlace)
-                            break
+                        if po.place == p.place:
+                            compVar = po.playerJoin(p.posx,p.posy)
+                            if compVar == True:
+                                player.joinPlace(po.toPosx,po.toPosy,po.toPlace)
+                                p.joinPlace(po.toPosx,po.toPosy,po.toPlace)
+                                break
 
         if 'btnActionC' == task['task']:
             for p in pConnecteds:
@@ -101,9 +102,16 @@ def funcEngine(request):
             message=task['task2']
             for pl in places:
                 if player.place == pl.place:
-                    pl.sendMessage(player.nickname,message)
+                    for p in pConnecteds:
+                        if p.nickname == player.nickname:
+                            if '/' not in message:
+                                pl.sendMessage(p,message)
+                            if message == '/getpos':
+                                notification.body = 'Your position is X: ',p.posx,' Y: ',p.posy
+                                notification.state = True
+                                print(notification.body)
+                                time.sleep(3)
+                                notification.state = False
 
-
-
-    return render(request, 'engine.html',{'tittle':tittle, 'logged':logged, 'player':player,'pConnecteds':pConnecteds, 'places':places, 'waters':waters, 'decorations':decorations, 'windows':windows})
+    return render(request, 'engine.html',{'tittle':tittle, 'logged':logged, 'player':player,'pConnecteds':pConnecteds, 'places':places, 'waters':waters, 'decorations':decorations, 'windows':windows, 'notification':notification})
 

@@ -35,6 +35,7 @@ windowExample = EntityWindow(nameWindow="windowExample",tittle="Window Example")
 windows.append(windowExample)
 windowExample2 = EntityWindow(nameWindow="windowExample2",tittle="Window Example 2")
 windows.append(windowExample2)
+notification = EntityNotification(nameWindow="notification",tittle="Notification",body="",state=False)
 
 def funcMain(request):
     global pConnecteds

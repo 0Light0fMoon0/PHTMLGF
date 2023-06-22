@@ -9,10 +9,9 @@ $(document).ready(function(){
     setInterval(function(){
        $(' #screen').load(' #objects');
        $(' #console').load(' #chat');
-       $(' #notifs').load(' #notif');
 
 
-    }, 250);
+    }, 1000);
 });
 
 </script>
@@ -25,35 +24,31 @@ $(document).ready(function(){
         <!----------------------------------- Screen ----------------------------------->
                         <div class="card text-center" style="background-color: rgba(0, 0, 0, 0.5);">
                                 <div class="card text-center" style="background-color: rgba(33, 37, 41, 0.8);" id="screen">
-                {%for po in pConnecteds%} 
-                        {%if po.nickname == player.nickname%} 
-                                        <div class="image-container" id="objects" style="transform: scale(3) translate({{po.camera_x}}%, {{po.camera_y}}%);">
-                        {%endif%}
-                {%endfor%}
+                                        <div id="objects">
                 {%for pl in places%}
                                         <!-- Printing Place -->
                         {%if player.place == pl.place%}
-                                                <img src="{%static pl.texture%}" class="card-img" alt="...">
-                                                <div class="card-img-overlay">
+                                        <img src="{%static pl.texture%}" class="card-img" alt="...">
+                                        <div class="card-img-overlay">
                                         <!-- Printing Players -->
                                 {%for po in pConnecteds%} 
                                         {%if po.place == pl.place%}
-                                                        <img src="{%static po.texture%}" style="width:1.25%;position: absolute;top: {{po.posy}}%; left: {{po.posx}}%;">
+                                                <img src="{%static po.texture%}" style="position: absolute;top: {{po.posy}}%; left: {{po.posx}}%;">
                                         {%endif%}
                                 {%endfor%}
                                 {%for place in places%} 
                                         {%if place.location == pl.place%}
-                                                        <img src="{%static place.txtExt%}" style="width:12.5%;position: absolute;top: {{place.posy}}%; left: {{place.posx}}%;">
+                                                <img src="{%static place.txtExt%}" style="position: absolute;top: {{place.posy}}%; left: {{place.posx}}%;">
                                         {%endif%}
                                 {%endfor%}
                                 {%for d in decorations%} 
                                         {%if d.place == pl.place%}
-                                                        <img src="{%static d.texture%}" style="width:1.5%;position: absolute;top: {{d.posy}}%; left: {{d.posx}}%;">
+                                                <img src="{%static d.texture%}" style="position: absolute;top: {{d.posy}}%; left: {{d.posx}}%;">
                                         {%endif%}
                                 {%endfor%}
 
 
-                                                </div>
+                                        </div>
                         {%endif%}
                 {%endfor%}
                                         </div>
@@ -71,8 +66,8 @@ $(document).ready(function(){
                                         <div class="h-50 card text-white" style="text-align:center;background-color: rgba(12, 14, 16, 0.8);text-align:center;">
                                                 <div class="card-body" id="console">
                                                         <div id="chat">
-                                                                <h5 class="card-title">{{pl.place}}</h5>
-                                                                <pre style="height: auto;max-height: 100px;overflow: hidden;white-space: pre-wrap;">{{pl.log}}</pre>
+                                                        <h5 class="card-title">{{pl.place}}</h5>
+                                                        <pre style="height: auto;max-height: 100px;overflow: hidden;word-break: normal;word-wrap: normal;white-space: pre;">{{pl.log}}</pre>
                                                         </div>
                                                 </div>
                                         </div>
@@ -186,18 +181,6 @@ $(document).ready(function(){
                                                                     },
                                                                     })
                                                                 });
-                                                        $(document).on('submit','#btnActionC-form',function(e){
-                                                                e.preventDefault();
-                                                                $.ajax({
-                                                                    type:'POST',
-                                                                    url:'/engine/',
-                                                                    data:
-                                                                    {
-                                                                        task:$("#btnActionC").val(),
-                                                                        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
-                                                                    },
-                                                                    })
-                                                                });
                                                         $(document).on('submit','#console-form',function(e){
                                                                 e.preventDefault();
                                                                 $.ajax({
@@ -226,12 +209,6 @@ $(document).ready(function(){
                 {% csrf_token %}
                                                         <button  type="submit" name="btnActionB" id="btnActionB" value="btnActionB" class="btn btn-danger">Action B</button>
                                                 </form>
-&emsp;
-                                                <form action="/engine/" method="POST" id="btnActionC-form" style="">
-                {% csrf_token %}
-                                                        <button  type="submit" name="btnActionC" id="btnActionC" value="btnActionC" class="btn btn-danger">Action C</button>
-                                                </form>
-
                                         </div>
                                 </div>
                         </div>
@@ -239,58 +216,5 @@ $(document).ready(function(){
         <!---->
         </div>
 </div>
-<!----------------------------------- Menu Windows ----------------------------------->
-
-
-<!-- Windows: Here you should make your Windows for you game. Remember evaluate it with an if like the examples. -->
-        {%for w in windows%}
-                {%if w.nameWindow == "windowExample"%}
-<div class="modal fade text-white" id="{{w.nameWindow}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.1);">
-        <div class="modal-dialog" style="background-color: rgba(0, 0, 0, 0.1);">
-                <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.1);">
-                        <div class="modal-header" style="background-color: rgba(0, 0, 0, 0.1);">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">{{w.tittle}}</h1>
-                                <button type="button" class="btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                                This is an example window body.
-                        </div>
-                        <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Button</button>
-                        </div>
-                </div>
-        </div>
-</div>
-                {%endif%}
-
-                {%if w.nameWindow == "windowExample2"%}
-<div class="modal fade text-white" id="{{w.nameWindow}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, 0.1);">
-        <div class="modal-dialog" style="background-color: rgba(0, 0, 0, 0.1);">
-                <div class="modal-content" style="background-color: rgba(0, 0, 0, 0.1);">
-                        <div class="modal-header" style="background-color: rgba(0, 0, 0, 0.1);">
-                                <h1 class="modal-title fs-5" id="exampleModalLabel">{{w.tittle}}</h1>
-                                <button type="button" class="btn-close-dark" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                                This is an second example window body.
-                        </div>
-                        <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                <button type="button" class="btn btn-primary">Button</button>
-                        </div>
-                </div>
-        </div>
-</div>
-                {%endif%}
-        {%endfor%}
-
-<!-- Notifications -->
-<div class="d-flex justify-content-center" id="notifs">
-        <div class="d-flex justify-content-center" id="notif">
-        {%if notification.state == True%}
-                <div id="snackbar">{{notification.body}}</div>
-        {%endif%}
-        </div>
-</div>
+<!----------------------------------- Menu ----------------------------------->
 {% endblock %}

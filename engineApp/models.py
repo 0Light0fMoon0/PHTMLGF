@@ -72,8 +72,8 @@ class Water(models.Model):
 class Decoration(models.Model):
     decoration = models.CharField(max_length=50)
     texture = models.CharField(max_length=50)
-    posx = models.IntegerField()
-    posy = models.IntegerField()
+    posx = models.FloatField()
+    posy = models.FloatField()
     place = models.CharField(max_length=50)
     def __str__(self):
         return "Decoration %s" %self.decoration
